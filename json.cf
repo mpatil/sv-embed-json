@@ -1,0 +1,29 @@
+entrypoints JSON;
+rules JSON ::= Value;
+
+-- Values
+ObjectVal. Value  ::= "{" [Member_Item] "}";
+ArrayVal.  Value  ::= "[" [Value] "]";
+StringVal. Value  ::= String_Literal;
+ScientificNumberVal. Value  ::=  ScientificNum;
+DecimalNumberVal.    Value  ::=  DecimalNum;
+IntegerNumberVal.    Value  ::=  IntegerNum;
+TrueVal.   Value  ::= "true";
+FalseVal.  Value  ::= "false";
+NullVal.   Value  ::= "null";
+
+separator Member_Item ",";
+Member. Member_Item ::= String_Literal ":" Value;
+
+separator Value  ",";
+StringLit. String_Literal ::= AnyChars;
+
+-- Number
+token IntegerNum     ["-+"]? (digit | (["123456789"] (digit)* ));
+token DecimalNum     ["-+"]? ((digit | (["123456789"] (digit)* )) '.' (digit (digit)*));
+token ScientificNum  ["-+"]? ((digit | (["123456789"] (digit)* )) ('.' (digit (digit)*))? 'e' ["-+"]? (digit (digit)*));
+
+-- Strings
+token AnyChars '"' (char - ["\r\n\t\""])* '"' ;
+
+
