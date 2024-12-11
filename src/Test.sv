@@ -13,28 +13,38 @@ program automatic test;
 
   initial begin : prog
     automatic string filename = "test.w";
-    automatic JSON parse_tree;
-    automatic Interp i = new();
+
+    automatic JSON parse_tree_string;
+    automatic JSON parse_tree_file;
+
     automatic PrintAbsyn p = new();
     automatic ShowAbsyn q = new();
 
+    automatic Interp i = new();
+
     automatic string json_str = "{ \"a\" : [ 1, 2, \"array_added_text\" ],\n \"f\" : false, \"i\" : 123, \"n\" : null,\n \"o\" : { \"2\" : 2, \"3\" : 3,\n \"inner_obj\" : { \"auth\" : \"zcr\", \"grade\" : 5 } }\n , \"s\" : \"abc\", \"t\" : true }          \n";
 
-    if ($value$plusargs("input=%s", filename))
-      parse_tree = pJSON(filename);
-    else
-    begin
-      $write("%s\n", json_str);
-      parse_tree = psJSON(json_str);
-    end
-    if (parse_tree) begin
+    parse_tree_string = psJSON(json_str);
 
-      p.print(parse_tree);
+    if ($value$plusargs("input=%s", filename))
+      parse_tree_file = pJSON(filename);
+
+    if (parse_tree_file) begin
+      p.print(parse_tree_file);
       //$write("%s\n", p.buf_);
 
-      q.show(parse_tree);
+      q.show(parse_tree_file);
       //$write("%s\n", q.buf_);
-      i.interpret(parse_tree);
+    end
+
+    if (parse_tree_file) begin
+      $display("Parsing json file %s\n", filename);
+      i.interpret(parse_tree_file);
+      $display(i.get_json_val().convert2string());
+    end
+    if (parse_tree_string) begin
+      $display("Parsing json string %s\n", json_str);
+      i.interpret(parse_tree_string);
       $display(i.get_json_val().convert2string());
     end
   end

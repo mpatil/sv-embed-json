@@ -83,22 +83,22 @@ endclass
 /********************   Abstract Syntax Classes    ********************/
 
 virtual class JSON implements Visitable;
-
+  int line_number;
   virtual task accept(Visitor v); endtask
 endclass
 
 virtual class Value implements Visitable;
-
+  int line_number;
   virtual task accept(Visitor v); endtask
 endclass
 
 virtual class Member_Item implements Visitable;
-
+  int line_number;
   virtual task accept(Visitor v); endtask
 endclass
 
 virtual class String_Literal implements Visitable;
-
+  int line_number;
   virtual task accept(Visitor v); endtask
 endclass
 

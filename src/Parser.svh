@@ -18,16 +18,16 @@
   //#line 5 "json.y"
 `include "Absyn.svh"
 `include "bio.svh"
-`include "Lexer.svh"
 
-Biobuf b;
+class Parser;
+  Biobuf b;
+`include "Lexer.svh"
 
 typedef struct { int i; } YY_BUFFER_STATE;
 
 function int yywrap();
   return 1;
 endfunction
-
 
 static JSON  YY_RESULT_JSON_ = null;
 
@@ -58,10 +58,8 @@ task execerror(string s, string t);   /* recover from run-time error */
     $fatal (1, $psprintf("\nFATAL ERROR: line %0d near \"%s\": exiting!!!\n\n", yy_mylinenumber, string'(yytext))); //'
 endtask
 
-
-
-  //#line 77 "json.y"
-/*`include "Lexer.svh"*/
+  //#line 75 "json.y"
+/**/
   static bit  yydebug;           //do I want debug output?
   int yynerrs;            //number of errors so far
   int yyerrflag;          //was there an error?
@@ -161,31 +159,31 @@ endtask
       0,    0,   17,   13,   14,  0
   };
   static int  yydgoto[] = { 10,
-     13,   15,   16,   14,   12,0 
+     13,   15,   16,   14,   12,0
   };
   static int  yysindex[] = { -258,
    -258,    0,    0,    0, -264,    0,    0,    0,    0,    0,
       0,    0, -250, -248, -252, -243, -242, -258,    0,    0,
-   -264, -258,    0,    0,    0, 0 
+   -264, -258,    0,    0,    0, 0
   };
   static int  yyrindex[] = { 0,
    -241,    0,    0,    0, -247,    0,    0,    0,    0,    0,
       0,    0, -240,    0,    0, -244,    0, -241,    0,    0,
-   -247,    0,    0,    0,    0,0 
+   -247,    0,    0,    0,    0,0
   };
   static int  yygindex[] = { 0,
-      1,   -3,    0,    6,   -5,0 
+      1,   -3,    0,    6,   -5,0
   };
 `define YYTABLESIZE 24
   int  yytable[] = { 17,
      11,    1,    6,    2,    3,    4,    5,   18,    6,    7,
       8,    9,   19,   20,   21,   17,   22,   24,   11,   15,
-     16,   12,   25,   23,0 
+     16,   12,   25,   23,0
   };
   int  yycheck[] = { 5,
       0,  260,  267,  262,  263,  264,  265,  258,  267,  268,
     269,  270,  261,  266,  258,   21,  259,   21,  266,  261,
-    261,  266,   22,   18,0 
+    261,  266,   22,   18,0
   };
 `define YYFINAL 10
 `ifndef YYDEBUG
@@ -211,7 +209,7 @@ endtask
   "","","","","","","","","","","","","","","","",
   "","","","_ERROR_","_COMMA","_COLON","_LBRACK","_RBRACK","_KW_false",
   "_KW_null","_KW_true","_LBRACE","_RBRACE","T_AnyChars","T_DecimalNum",
-  "T_IntegerNum","T_ScientificNum","" 
+  "T_IntegerNum","T_ScientificNum",""
   };
   static string yyrule[] = {
     "$accept : JSON",
@@ -282,7 +280,7 @@ endtask
     val_push(yylval);     //save empty value
     while (1) begin //until parsing is done, either correctly, or w/error
       doaction=1;
-      debug("loop"); 
+      debug("loop");
       //#### NEXT ACTION (from reduction table)
       for (yyn = yydefred[yystate]; yyn == 0; yyn = yydefred[yystate]) begin
         debug($psprintf("yyn:%0d  state:%0d  yychar: %s (%0d)", yyn, yystate, ascii[yychar], yychar));
@@ -377,77 +375,77 @@ endtask
       yyval = dup_yyval(yyval);  //duplicate yyval if ParserVal is used as semantic value
       case(yyn)
       //########## USER-SUPPLIED ACTIONS ##########
-      1:  //#line 81 "json.y"
+      1:  //#line 79 "json.y"
       begin
-          yyval.json_ = JSONValue::new (valstk[0].value_);YY_RESULT_JSON_ = yyval.json_; 
+          yyval.json_ = JSONValue::new (valstk[0].value_);YY_RESULT_JSON_ = yyval.json_;
       end
-      2:  //#line 83 "json.y"
+      2:  //#line 81 "json.y"
       begin
-          valstk[1].listmember_item_.v.reverse ;yyval.value_ = ObjectVal::new (valstk[1].listmember_item_); 
+          valstk[1].listmember_item_.v.reverse ;yyval.value_ = ObjectVal::new (valstk[1].listmember_item_);
       end
-      3:  //#line 84 "json.y"
+      3:  //#line 82 "json.y"
       begin
-          valstk[1].listvalue_.v.reverse ;yyval.value_ = ArrayVal::new (valstk[1].listvalue_); 
+          valstk[1].listvalue_.v.reverse ;yyval.value_ = ArrayVal::new (valstk[1].listvalue_);
       end
-      4:  //#line 85 "json.y"
+      4:  //#line 83 "json.y"
       begin
-          yyval.value_ = StringVal::new (valstk[0].string_literal_); 
+          yyval.value_ = StringVal::new (valstk[0].string_literal_);
       end
-      5:  //#line 86 "json.y"
+      5:  //#line 84 "json.y"
       begin
-          yyval.value_ = ScientificNumberVal::new (valstk[0]._string); 
+          yyval.value_ = ScientificNumberVal::new (valstk[0]._string);
       end
-      6:  //#line 87 "json.y"
+      6:  //#line 85 "json.y"
       begin
-          yyval.value_ = DecimalNumberVal::new (valstk[0]._string); 
+          yyval.value_ = DecimalNumberVal::new (valstk[0]._string);
       end
-      7:  //#line 88 "json.y"
+      7:  //#line 86 "json.y"
       begin
-          yyval.value_ = IntegerNumberVal::new (valstk[0]._string); 
+          yyval.value_ = IntegerNumberVal::new (valstk[0]._string);
       end
-      8:  //#line 89 "json.y"
+      8:  //#line 87 "json.y"
       begin
-          yyval.value_ = TrueVal::new (); 
+          yyval.value_ = TrueVal::new ();
       end
-      9:  //#line 90 "json.y"
+      9:  //#line 88 "json.y"
       begin
-          yyval.value_ = FalseVal::new (); 
+          yyval.value_ = FalseVal::new ();
       end
-      10:  //#line 91 "json.y"
+      10:  //#line 89 "json.y"
       begin
-          yyval.value_ = NullVal::new (); 
+          yyval.value_ = NullVal::new ();
       end
-      11:  //#line 93 "json.y"
+      11:  //#line 91 "json.y"
       begin
-          yyval.listmember_item_ = ListMember_Item::new(); 
+          yyval.listmember_item_ = ListMember_Item::new();
       end
-      12:  //#line 94 "json.y"
+      12:  //#line 92 "json.y"
       begin
-          yyval.listmember_item_ = ListMember_Item::new(); yyval.listmember_item_.v.push_back(valstk[0].member_item_); 
+          yyval.listmember_item_ = ListMember_Item::new(); yyval.listmember_item_.v.push_back(valstk[0].member_item_);
       end
-      13:  //#line 95 "json.y"
+      13:  //#line 93 "json.y"
       begin
-          valstk[0].listmember_item_.v.push_back(valstk[2].member_item_); yyval.listmember_item_ = valstk[0].listmember_item_; 
+          valstk[0].listmember_item_.v.push_back(valstk[2].member_item_); yyval.listmember_item_ = valstk[0].listmember_item_;
       end
-      14:  //#line 97 "json.y"
+      14:  //#line 95 "json.y"
       begin
-          yyval.member_item_ = Member::new (valstk[2].string_literal_, valstk[0].value_); 
+          yyval.member_item_ = Member::new (valstk[2].string_literal_, valstk[0].value_);
       end
-      15:  //#line 99 "json.y"
+      15:  //#line 97 "json.y"
       begin
-          yyval.listvalue_ = ListValue::new(); 
+          yyval.listvalue_ = ListValue::new();
       end
-      16:  //#line 100 "json.y"
+      16:  //#line 98 "json.y"
       begin
-          yyval.listvalue_ = ListValue::new(); yyval.listvalue_.v.push_back(valstk[0].value_); 
+          yyval.listvalue_ = ListValue::new(); yyval.listvalue_.v.push_back(valstk[0].value_);
       end
-      17:  //#line 101 "json.y"
+      17:  //#line 99 "json.y"
       begin
-          valstk[0].listvalue_.v.push_back(valstk[2].value_); yyval.listvalue_ = valstk[0].listvalue_; 
+          valstk[0].listvalue_.v.push_back(valstk[2].value_); yyval.listvalue_ = valstk[0].listvalue_;
       end
-      18:  //#line 103 "json.y"
+      18:  //#line 101 "json.y"
       begin
-          yyval.string_literal_ = StringLit::new (valstk[0]._string); 
+          yyval.string_literal_ = StringLit::new (valstk[0]._string);
       end
       //########## END OF USER-SUPPLIED ACTIONS ##########
       endcase //case
@@ -504,29 +502,32 @@ endtask
   endtask
   
 
-  //#line 107 "json.y"
+  //#line 105 "json.y"
 
+endclass
 
 /* Entrypoint: parse JSON from file. */
 function JSON pJSON(string filename);
-  b = Bopen(filename, `OREAD);
-  yy_mylinenumber = 1;
-  initialize_lexer(0);
-  if (yyparse())
+  automatic Parser p = new();
+  p.b = Bopen(filename, `OREAD);
+  p.yy_mylinenumber = 1;
+  p.initialize_lexer(0);
+  if (p.yyparse())
     return null; /* Failure */
   else
-    return YY_RESULT_JSON_;/* Success */
+    return p.YY_RESULT_JSON_;/* Success */
 endfunction
 
 /* Entrypoint: parse JSON from string. */
 function JSON psJSON(string str);
-  b = Bopens(str);
-  yy_mylinenumber = 1;
-  initialize_lexer(0);
-  if (yyparse())
+  automatic Parser p = new();
+  p.b = Bopens(str);
+  p.yy_mylinenumber = 1;
+  p.initialize_lexer(0);
+  if (p.yyparse())
     return null; /* Failure */
   else
-    return YY_RESULT_JSON_;/* Success */
+    return p.YY_RESULT_JSON_;/* Success */
 endfunction
 
 

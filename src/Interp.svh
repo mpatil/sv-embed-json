@@ -43,11 +43,10 @@ class Interp implements Visitor;
 
   task interpret(Visitable v);
     v.accept(this);
-    assert(jval.size() == 1);
   endtask
 
   function Val_ get_json_val();
-    return jval[0];
+    return jval[$];
   endfunction
 
 endclass

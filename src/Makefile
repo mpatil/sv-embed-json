@@ -16,7 +16,6 @@ distclean : clean
 .PHONY: qrun
 qrun : fusesoc Test.sv test.w
 	${QRUN} ${QRUN_OPTS} -F test-vcs/lib_interp_json_0.scr Test.sv +input=test.w
-	#${QRUN} ${QRUN_OPTS} -F test-vcs/lib_interp_json_0.scr Test.sv
 
 .PHONY: fusesoc
 fusesoc :
