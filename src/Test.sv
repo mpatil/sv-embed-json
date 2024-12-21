@@ -22,9 +22,9 @@ program automatic test;
 
     automatic Interp i = new();
 
-    automatic string json_str = "{ \"a\" : [ 1, 2, \"array_added_text\" ],\n \"f\" : false, \"i\" : 123, \"n\" : null,\n \"o\" : { \"2\" : 2, \"3\" : 3,\n \"inner_obj\" : { \"auth\" : \"zcr\", \"grade\" : 5 } }\n , \"s\" : \"abc\", \"t\" : true }          \n";
+    automatic Val_ val;
 
-    parse_tree_string = psJSON(json_str);
+    automatic string json_str = "\n\n{\n\n \"z\" : null,\n\"y\" : [],\n\n  \"x\" : {},\n\n\n \"a\" : [ 1, {\"2\" : {\"a\": [1]}}, \"array_added_text\" ],\n \"f\" : false, \"i\" : 123, \"n\" : null,\n \"o\" : { \"2\" : 2, \"3\" : [3,4,5],\n \"inner_obj\" : { \"auth\" : \"zcr\", \"grade\" : 5 } }\n , \"s\" : \"abc\", \"t\" : true }          \n";
 
     if ($value$plusargs("input=%s", filename))
       parse_tree_file = pJSON(filename);
@@ -38,15 +38,21 @@ program automatic test;
     end
 
     if (parse_tree_file) begin
-      $display("Parsing json file %s\n", filename);
+      $display("Parsed json file %s\n", filename);
       i.interpret(parse_tree_file);
       $display(i.get_json_val().convert2string());
     end
+
+    $display("Parsing json string %s\n", json_str);
+    parse_tree_string = psJSON(json_str);
+
     if (parse_tree_string) begin
-      $display("Parsing json string %s\n", json_str);
       i.interpret(parse_tree_string);
-      $display(i.get_json_val().convert2string());
+      val = i.get_json_val();
+      $display(val.convert2string());
+      $display(val.getByKey("o").convert2string());
     end
+
   end
 endprogram
 

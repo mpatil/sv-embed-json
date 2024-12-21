@@ -24,6 +24,6 @@ token DecimalNum     ["-+"]? ((digit | (["123456789"] (digit)* )) '.' (digit (di
 token ScientificNum  ["-+"]? ((digit | (["123456789"] (digit)* )) ('.' (digit (digit)*))? 'e' ["-+"]? (digit (digit)*));
 
 -- Strings
-token AnyChars '"' (char - ["\r\n\t\""])* '"' ;
+token AnyChars  '"' ((char - ["\"\\"]) | ('\\' ["\"\\nt"]))* '"'
 
 

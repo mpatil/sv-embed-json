@@ -13,6 +13,11 @@ class Val_;
     virtual function automatic Val_ getByIndex (input int unsigned index);
         return null;
     endfunction
+
+    virtual function automatic Val_ getByKey (input string key);
+        return null;
+    endfunction
+
     virtual function string convert2string();
         return this.asString();
     endfunction
@@ -35,15 +40,20 @@ class ObjectVal_ extends Val_;
     endfunction
 
     virtual function string asString();
-        string s = "{ ";
-        string t;
+        string s = "{ ", t, l;
+
+        if ( ! members.last(l) )
+            return "{}";
 
         if ( members.first(t)) do
         begin
-            $sformat(s, "%s%s : %s, ", s, t, members[t].convert2string());
+            if (t == l) break;
+            $sformat(s, "%s\"%s\" : %s, ", s, t, members[t].convert2string());
         end
         while (members.next(t));
-        $sformat(s, "%s} ", s);
+        if (l != "")
+            $sformat(s, "%s\"%s\" : %s", s, t, members[t].convert2string());
+        $sformat(s, "%s }", s);
         return s;
     endfunction
 endclass
@@ -66,11 +76,11 @@ class ArrayVal_ extends Val_;
     virtual function string asString();
         string s = "[ ";
         int i;
-        for (i = 0; i < members.size(); i++)
-        begin
+        if (members.size() == 0)
+            return "[]";
+        for (i = 0; i < members.size() - 1; i++)
             $sformat(s, "%s%s, ", s, members[i].convert2string());
-        end
-        $sformat(s, "%s]", s);
+        $sformat(s, "%s%s ]", s, members[members.size() - 1].convert2string());
         return s;
     endfunction
 
