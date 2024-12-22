@@ -36,7 +36,7 @@ task Interp::visitStringVal(StringVal p);
 endtask
 
 task Interp::visitIntegerNumberVal(IntegerNumberVal p);
-  NumberVal_ v;
+  IntVal_ v;
 
   visitIntegerNum(p.integernum_);
 
@@ -45,7 +45,7 @@ task Interp::visitIntegerNumberVal(IntegerNumberVal p);
 endtask
 
 task Interp::visitDecimalNumberVal(DecimalNumberVal p);
-  NumberVal_ v;
+  RealVal_ v;
 
   visitDecimalNum(p.decimalnum_);
 
@@ -54,7 +54,7 @@ task Interp::visitDecimalNumberVal(DecimalNumberVal p);
 endtask
 
 task Interp::visitScientificNumberVal(ScientificNumberVal p);
-  NumberVal_ v;
+  RealVal_ v;
 
   visitScientificNum(p.scientificnum_);
 
