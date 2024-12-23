@@ -28,35 +28,37 @@ endclass
 
 class ObjectVal_ extends Val_;
     local Val_ members[string];
+    local string order[$];
 
     function new (); super.new(); endfunction
 
     function automatic void append (input string key, input Val_ elem);
         members[key] = elem;
+        order.push_back(key);
     endfunction
 
     function automatic Val_ getByKey (input string key);
-        if (members.exists(key)) begin
+        if (members.exists(key))
           return members[key];
-        end
         return null;
     endfunction
 
+    function automatic Val_ getByIndex (input int unsigned index);
+        if (members.num())
+            return members[order[index]];
+        return null;
+    endfunction
+
+    function automatic int unsigned size(); return order.size(); endfunction
+
     function string asString();
-        string s = "{ ", t, l;
-
-        if ( ! members.last(l) )
+        string s = "{ ";
+        int i;
+        if (order.size() == 0)
             return "{}";
-
-        if ( members.first(t)) do
-        begin
-            if (t == l) break;
-            $sformat(s, "%s\"%s\" : %s, ", s, t, members[t].convert2string());
-        end
-        while (members.next(t));
-        if (l != "")
-            $sformat(s, "%s\"%s\" : %s", s, t, members[t].convert2string());
-        $sformat(s, "%s }", s);
+        for (i = 0; i < order.size() - 1; i++)
+            $sformat(s, "%s\"%s\" : %s, ", s, order[i], members[order[i]].convert2string());
+        $sformat(s, "%s\"%s\" : %s }", s, order[i], members[order[order.size() - 1]].convert2string());
         return s;
     endfunction
 endclass
@@ -70,9 +72,8 @@ class ArrayVal_ extends Val_;
     function automatic int unsigned size(); return members.size(); endfunction
 
     function automatic Val_ getByIndex (input int unsigned index);
-        if (members.size()) begin
+        if (members.size())
             return members[index];
-        end
         return null;
     endfunction
 
