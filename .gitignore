@@ -1,0 +1,9 @@
+*.bak
+*.log
+json.l
+json.y
+qrun.out/
+test-vcs/
+vsim_stacktrace.vstf
+y.output
+

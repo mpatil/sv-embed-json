@@ -8,10 +8,10 @@ QRUN_OPTS = -64 -sv -mfcu -permissive -l comp.log -suppress 2875,2240 +incdir+./
 all : qrun
 
 clean :
-	rm -rf qrun.out test-vcs
+	rm -rf qrun.out test-vcs comp.log
 
 distclean : clean
-	rm -f comp.log modelsim.ini *.bak y.output
+	rm -f modelsim.ini *.bak y.output
 
 .PHONY: qrun
 qrun : fusesoc Test.sv test.json

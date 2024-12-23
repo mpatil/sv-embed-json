@@ -16,6 +16,36 @@ package json_pkg;
 `include "json/JSONInterp.sv"
 `include "json/JSONPrinter.sv"
 
+  /* Entrypoint: parse JSON from file. */
+  function Val_ pJSON(string filename);
+    automatic Parser p = new();
+    p.b = Bopen(filename, `OREAD);
+    p.yy_mylinenumber = 1;
+    p.initialize_lexer(0);
+    if (p.yyparse())
+      return null; /* Failure */
+    else begin
+      automatic Interp i = new();
+      i.interpret(p.YY_RESULT_JSON_);
+      return i.get_json_val();
+    end
+  endfunction
+
+  /* Entrypoint: parse JSON from string. */
+  function Val_ psJSON(string str);
+  automatic Parser p = new();
+    p.b = Bopens(str);
+    p.yy_mylinenumber = 1;
+    p.initialize_lexer(0);
+    if (p.yyparse())
+      return null; /* Failure */
+    else begin
+      automatic Interp i = new();
+      i.interpret(p.YY_RESULT_JSON_);
+      return i.get_json_val();
+    end
+  endfunction
+
 endpackage
 
 `endif

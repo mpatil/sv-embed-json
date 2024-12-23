@@ -20,7 +20,6 @@ filesets:
 
       - json_pkg.sv
     file_type: systemVerilogSource
-
   tb:
     files:
       - ../Test.sv
@@ -53,7 +52,7 @@ targets:
     toplevel: tb_top
     default_tool: vcs
     parameters:
-      - input=test.w
+      - input=test.json
 
 parameters:
   input:

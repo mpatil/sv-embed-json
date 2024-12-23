@@ -508,31 +508,3 @@ endtask
   //#line 108 "json.y"
 
 endclass
-
-
-/* Entrypoint: parse JSON from file. */
-function JSON pJSON(string filename);
-automatic Parser p = new();
-  p.b = Bopen(filename, `OREAD);
-  p.yy_mylinenumber = 1;
-  p.initialize_lexer(0);
-  if (p.yyparse())
-    return null; /* Failure */
-  else
-    return p.YY_RESULT_JSON_;/* Success */
-endfunction
-
-/* Entrypoint: parse JSON from string. */
-function JSON psJSON(string str);
-automatic Parser p = new();
-  p.b = Bopens(str);
-  p.yy_mylinenumber = 1;
-  p.initialize_lexer(0);
-  if (p.yyparse())
-    return null; /* Failure */
-  else
-    return p.YY_RESULT_JSON_;/* Success */
-endfunction
-
-
-
