@@ -7,15 +7,15 @@ filesets:
   pkg:
     files:
 
-      - Absyn.svh: {is_include_file: true}
-      - Interp.svh: {is_include_file: true}
-      - Lexer.svh: {is_include_file: true}
-      - Printer.svh: {is_include_file: true}
+      - JSONAbsyn.svh: {is_include_file: true}
+      - JSONInterp.svh: {is_include_file: true}
+      - JSONLexer.svh: {is_include_file: true}
+      - JSONPrinter.svh: {is_include_file: true}
       - bio.svh: {is_include_file: true}
-      - Parser.svh: {is_include_file: true}
-      - Absyn.sv: {is_include_file: true}
-      - Interp.sv: {is_include_file: true}
-      - Printer.sv: {is_include_file: true}
+      - JSONParser.svh: {is_include_file: true}
+      - JSONAbsyn.sv: {is_include_file: true}
+      - JSONInterp.sv: {is_include_file: true}
+      - JSONPrinter.sv: {is_include_file: true}
       - json.sv: {is_include_file: true}
 
       - json_pkg.sv
@@ -23,7 +23,7 @@ filesets:
 
   tb:
     files:
-      - Test.sv
+      - ../Test.sv
     file_type: systemVerilogSource
 
 targets:

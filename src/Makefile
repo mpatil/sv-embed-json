@@ -14,9 +14,9 @@ distclean : clean
 	rm -f comp.log modelsim.ini *.bak y.output
 
 .PHONY: qrun
-qrun : fusesoc Test.sv test.w
-	${QRUN} ${QRUN_OPTS} -F test-vcs/lib_interp_json_0.scr Test.sv +input=test.w
+qrun : fusesoc Test.sv test.json
+	${QRUN} ${QRUN_OPTS} -F test-vcs/lib_interp_json_0.scr Test.sv +input=test.json
 
 .PHONY: fusesoc
 fusesoc :
-	fusesoc --cores-root . run --no-export --target=test --build-root=. --setup lib:interp:json
+	fusesoc --cores-root json run --no-export --target=test --build-root=. --setup lib:interp:json

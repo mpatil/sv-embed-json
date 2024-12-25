@@ -16,12 +16,12 @@
 `define YYNTOKENS 142
 `define YYERRCODE 256
   //#line 5 "json.y"
-`include "Absyn.svh"
+`include "json/JSONAbsyn.svh"
 `include "bio.svh"
 
 class Parser;
   Biobuf b;
-`include "Lexer.svh"
+`include "json/JSONLexer.svh"
 
 typedef struct { int i; } YY_BUFFER_STATE;
 
