@@ -1,11 +1,11 @@
 ![](https://img.shields.io/badge/license-MIT-green)
 
 # sv-embed-json
-Yet another lib for enbedding JSON in SystemVerilog. What's different is that this lib is extensible and the parser is generated from sv bnfc.
+Yet another lib for embedding JSON in SystemVerilog. What's different is that this lib is extensible and the parser is generated from sv bnfc.
 
 ## Introduction
 
-A string or a file with json formatted data can be read into a systemverilog class (Val_) representing the json value.
+A string or a file with json formatted data can be read into a systemverilog class (`Val_`) representing the json value.
 
 ## Reference
 
