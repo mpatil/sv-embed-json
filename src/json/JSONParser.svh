@@ -16,7 +16,9 @@
 `define YYNTOKENS 142
 `define YYERRCODE 256
   //#line 5 "json.y"
+`ifndef JSON_ABSYN_HEADER
 `include "json/JSONAbsyn.svh"
+`endif
 `include "bio.svh"
 
 class Parser;
@@ -33,7 +35,7 @@ endfunction
 static JSON  YY_RESULT_JSON_ = null;
 
 
-  //#line 24 "json.y"
+  //#line 26 "json.y"
 typedef struct
 {
   int    _int;
@@ -47,7 +49,7 @@ typedef struct
   ListValue  listvalue_;
   String_Literal  string_literal_;
 } YYSTYPE;
-  //#line 39 "json.y"
+  //#line 41 "json.y"
 task yyerror(string str);
   $display("error: line %0d: %s at %s\n", yy_mylinenumber, str, string'(yytext)); //'
   $fatal;
@@ -61,7 +63,7 @@ endtask
 
 
 
-  //#line 78 "json.y"
+  //#line 80 "json.y"
 /**/
   static bit  yydebug;           //do I want debug output?
   int yynerrs;            //number of errors so far
@@ -378,75 +380,75 @@ endtask
       yyval = dup_yyval(yyval);  //duplicate yyval if ParserVal is used as semantic value
       case(yyn)
       //########## USER-SUPPLIED ACTIONS ##########
-      1:  //#line 82 "json.y"
+      1:  //#line 84 "json.y"
       begin
           yyval.json_ = JSONValue::new (valstk[0].value_); yyval.json_.line_number = yy_mylinenumber;YY_RESULT_JSON_ = yyval.json_; 
       end
-      2:  //#line 84 "json.y"
+      2:  //#line 86 "json.y"
       begin
           valstk[1].listmember_item_.v.reverse ;yyval.value_ = ObjectVal::new (valstk[1].listmember_item_); yyval.value_.line_number = yy_mylinenumber; 
       end
-      3:  //#line 85 "json.y"
+      3:  //#line 87 "json.y"
       begin
           valstk[1].listvalue_.v.reverse ;yyval.value_ = ArrayVal::new (valstk[1].listvalue_); yyval.value_.line_number = yy_mylinenumber; 
       end
-      4:  //#line 86 "json.y"
+      4:  //#line 88 "json.y"
       begin
           yyval.value_ = StringVal::new (valstk[0].string_literal_); yyval.value_.line_number = yy_mylinenumber; 
       end
-      5:  //#line 87 "json.y"
+      5:  //#line 89 "json.y"
       begin
           yyval.value_ = ScientificNumberVal::new (valstk[0]._string); yyval.value_.line_number = yy_mylinenumber; 
       end
-      6:  //#line 88 "json.y"
+      6:  //#line 90 "json.y"
       begin
           yyval.value_ = DecimalNumberVal::new (valstk[0]._string); yyval.value_.line_number = yy_mylinenumber; 
       end
-      7:  //#line 89 "json.y"
+      7:  //#line 91 "json.y"
       begin
           yyval.value_ = IntegerNumberVal::new (valstk[0]._string); yyval.value_.line_number = yy_mylinenumber; 
       end
-      8:  //#line 90 "json.y"
+      8:  //#line 92 "json.y"
       begin
           yyval.value_ = TrueVal::new (); yyval.value_.line_number = yy_mylinenumber; 
       end
-      9:  //#line 91 "json.y"
+      9:  //#line 93 "json.y"
       begin
           yyval.value_ = FalseVal::new (); yyval.value_.line_number = yy_mylinenumber; 
       end
-      10:  //#line 92 "json.y"
+      10:  //#line 94 "json.y"
       begin
           yyval.value_ = NullVal::new (); yyval.value_.line_number = yy_mylinenumber; 
       end
-      11:  //#line 94 "json.y"
+      11:  //#line 96 "json.y"
       begin
           yyval.listmember_item_ = ListMember_Item::new(); 
       end
-      12:  //#line 95 "json.y"
+      12:  //#line 97 "json.y"
       begin
           yyval.listmember_item_ = ListMember_Item::new(); yyval.listmember_item_.v.push_back(valstk[0].member_item_); 
       end
-      13:  //#line 96 "json.y"
+      13:  //#line 98 "json.y"
       begin
           valstk[0].listmember_item_.v.push_back(valstk[2].member_item_); yyval.listmember_item_ = valstk[0].listmember_item_; 
       end
-      14:  //#line 98 "json.y"
+      14:  //#line 100 "json.y"
       begin
           yyval.member_item_ = Member::new (valstk[2].string_literal_, valstk[0].value_); yyval.member_item_.line_number = yy_mylinenumber; 
       end
-      15:  //#line 100 "json.y"
+      15:  //#line 102 "json.y"
       begin
           yyval.listvalue_ = ListValue::new(); 
       end
-      16:  //#line 101 "json.y"
+      16:  //#line 103 "json.y"
       begin
           yyval.listvalue_ = ListValue::new(); yyval.listvalue_.v.push_back(valstk[0].value_); 
       end
-      17:  //#line 102 "json.y"
+      17:  //#line 104 "json.y"
       begin
           valstk[0].listvalue_.v.push_back(valstk[2].value_); yyval.listvalue_ = valstk[0].listvalue_; 
       end
-      18:  //#line 104 "json.y"
+      18:  //#line 106 "json.y"
       begin
           yyval.string_literal_ = StringLit::new (valstk[0]._string); yyval.string_literal_.line_number = yy_mylinenumber; 
       end
@@ -505,6 +507,36 @@ endtask
   endtask
   
 
-  //#line 108 "json.y"
+  //#line 110 "json.y"
 
 endclass
+
+
+`ifdef DEFINE_ENTRYPOINTS
+/* Entrypoint: parse JSON from file. */
+function JSON pJSON(string filename);
+automatic Parser p = new();
+  p.b = Bopen(filename, `OREAD);
+  p.yy_mylinenumber = 1;
+  p.initialize_lexer(0);
+  if (p.yyparse())
+    return null; /* Failure */
+  else
+    return p.YY_RESULT_JSON_;/* Success */
+endfunction
+
+/* Entrypoint: parse JSON from string. */
+function JSON psJSON(string str);
+automatic Parser p = new();
+  p.b = Bopens(str);
+  p.yy_mylinenumber = 1;
+  p.initialize_lexer(0);
+  if (p.yyparse())
+    return null; /* Failure */
+  else
+    return p.YY_RESULT_JSON_;/* Success */
+endfunction
+`endif
+
+
+
