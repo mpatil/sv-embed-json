@@ -13,6 +13,29 @@ package json_pkg;
 `include "json/JSONInterp.svh"
 `include "json/JSONPrinter.svh"
 
+  // Constructor helpers for the Val_ class hierarchy. Useful for code that
+  // builds a JSON value tree programmatically (e.g., a generator-emitted
+  // toJSON() that needs to wrap an int / string / bool field as a Val_).
+  function automatic Val_ mkInt(longint x);
+    IntVal_ v = new(x);
+    return v;
+  endfunction
+
+  function automatic Val_ mkReal(real x);
+    RealVal_ v = new(x);
+    return v;
+  endfunction
+
+  function automatic Val_ mkStr(string x);
+    StringVal_ v = new(x);
+    return v;
+  endfunction
+
+  function automatic Val_ mkBool(bit x);
+    BoolVal_ v = new(x);
+    return v;
+  endfunction
+
   // Generated shared runtime helpers.
   // Keep grammar-specific semantic state and symbol/environment machinery
   // in the preserved Interp user files instead of this package support.
