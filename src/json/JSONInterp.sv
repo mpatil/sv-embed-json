@@ -31,7 +31,7 @@ task Interp::visitStringVal(StringVal p);
 
   p.string_literal_.accept(this);
 
-  v = new({"\"", currTermTok, "\""});
+  v = new(currTermTok);
   push(v);
 endtask
 

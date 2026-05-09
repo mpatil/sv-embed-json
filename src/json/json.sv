@@ -32,6 +32,8 @@ class ObjectVal_ extends Val_;
 
     function new (); super.new(); endfunction
 
+    function automatic bit isObject(); return 1; endfunction
+
     function automatic void append (input string key, input Val_ elem);
         members[key] = elem;
         order.push_back(key);
@@ -144,4 +146,5 @@ class StringVal_ extends Val_;
     endfunction
 
     function string asString(); return m_string; endfunction
+    function string convert2string(); return {"\"", m_string, "\""}; endfunction
 endclass
