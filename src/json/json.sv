@@ -51,6 +51,12 @@ class ObjectVal_ extends Val_;
         return null;
     endfunction
 
+    function automatic string keyAt (input int unsigned index);
+        if (index < order.size())
+            return order[index];
+        return "";
+    endfunction
+
     function automatic int unsigned size(); return order.size(); endfunction
 
     function string asString();
