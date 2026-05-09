@@ -37,10 +37,15 @@ endtask
 
 task Interp::visitIntegerNumberVal(IntegerNumberVal p);
   IntVal_ v;
+  longint val;
 
   visitIntegerNum(p.integernum_);
 
-  v = new(currTermTok.atoi());
+  // string.atoi() returns 32-bit `integer`, which loses the high bits of any
+  // JSON integer outside the int32 range. Parse via $sscanf into a longint
+  // so 64-bit values round-trip correctly.
+  void'($sscanf(currTermTok, "%d", val));
+  v = new(val);
   push(v);
 endtask
 
