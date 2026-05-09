@@ -18,5 +18,5 @@ A string or a file with json formatted data can be read into a systemverilog cla
 ## Development
 
 1. Clone the repository: `git clone https://github.com/mpatil/sv-embed-json.git && cd sv-embed-json`
-4. Setup simulator env. Only mentor questa supported right now.
+4. Setup simulator env. Only mentor questa and vcs supported right now.
 5. Run the default test: `make -C src`
