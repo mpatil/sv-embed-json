@@ -57,8 +57,8 @@ class ObjectVal_ extends Val_;
         if (order.size() == 0)
             return "{}";
         for (i = 0; i < order.size() - 1; i++)
-            $sformat(s, "%s\"%s\" : %s, ", s, order[i], members[order[i]].convert2string());
-        $sformat(s, "%s\"%s\" : %s }", s, order[i], members[order[order.size() - 1]].convert2string());
+            s = {s, "\"", order[i], "\" : ", members[order[i]].convert2string(), ", "};
+        s = {s, "\"", order[i], "\" : ", members[order[order.size() - 1]].convert2string(), " }"};
         return s;
     endfunction
 endclass
@@ -79,12 +79,11 @@ class ArrayVal_ extends Val_;
 
     function string asString();
         string s = "[ ";
-        int i;
         if (members.size() == 0)
             return "[]";
-        for (i = 0; i < members.size() - 1; i++)
-            $sformat(s, "%s%s, ", s, members[i].convert2string());
-        $sformat(s, "%s%s ]", s, members[members.size() - 1].convert2string());
+        for (int i = 0; i < members.size() - 1; i++)
+            s = {s, members[i].convert2string(), ", "};
+        s = {s, members[members.size() - 1].convert2string(), " ]"};
         return s;
     endfunction
 
